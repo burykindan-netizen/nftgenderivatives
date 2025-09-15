@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NFT Variant Generator</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:,">
+  <script defer src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="container">
+    <h1>NFT Variant Generator</h1>
+    <p>Upload a transparent PNG, pick a color to recolor, design a gradient background, and generate many PNG variants entirely client-side.</p>
+  </header>
+
+  <main class="container">
+    <section class="panel" id="upload-panel">
+      <h2>1. Upload PNG</h2>
+      <input type="file" id="fileInput" accept="image/png">
+      <div id="imageArea" class="image-area">
+        <canvas id="baseCanvas" width="512" height="512" aria-label="Base image preview"></canvas>
+        <div class="hint">Click on the image to pick a color region to recolor.</div>
+        <div id="pickInfo" class="pick-info">No color selected</div>
+      </div>
+    </section>
+
+    <section class="panel" id="recolor-panel">
+      <h2>2. Recolor Settings</h2>
+      <div class="grid grid-3">
+        <label>Hue range (±)
+          <input type="number" id="hueRange" min="0" max="180" value="20">
+        </label>
+        <label>Saturation range (±)
+          <input type="number" id="satRange" min="0" max="100" value="25">
+        </label>
+        <label>Lightness range (±)
+          <input type="number" id="lightRange" min="0" max="100" value="15">
+        </label>
+        <label>Color tolerance
+          <input type="number" id="tolerance" min="0" max="255" value="30">
+        </label>
+        <label>Variants
+          <input type="number" id="variantCount" min="1" max="500" value="20">
+        </label>
+        <label>Mirror
+          <select id="mirrorMode">
+            <option value="off">Off</option>
+            <option value="on">On</option>
+            <option value="random" selected>Random</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel" id="gradient-panel">
+      <h2>3. Gradient Background</h2>
+      <div class="gradient-controls">
+        <div class="row">
+          <label>Type
+            <select id="gradientType">
+              <option value="linear" selected>Linear</option>
+              <option value="radial">Radial</option>
+            </select>
+          </label>
+          <label>Angle
+            <input type="range" id="gradientAngle" min="0" max="360" value="45">
+          </label>
+          <button id="addStopBtn" type="button">Add Stop</button>
+          <button id="randomizeGradientBtn" type="button">Randomize</button>
+        </div>
+        <div class="row">
+          <div class="grad-preview-wrap">
+            <canvas id="gradientPreview" width="480" height="120"></canvas>
+            <div id="stopsOverlay" class="stops-overlay" aria-label="Gradient stops editor"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="generate-panel">
+      <h2>4. Generate</h2>
+      <div class="row">
+        <button id="generateBtn" type="button" disabled>Generate Variants</button>
+        <button id="downloadZipBtn" type="button" disabled>Download ZIP</button>
+        <span id="progress" class="progress"></span>
+      </div>
+      <div id="previewGrid" class="preview-grid"></div>
+    </section>
+  </main>
+
+  <footer class="container small">
+    <span>Client-side only. No data leaves your browser.</span>
+  </footer>
+</body>
+</html>
+
+
